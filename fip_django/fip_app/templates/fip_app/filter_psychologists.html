@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Psychologists</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        main {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        @media (min-width: 600px) {
+            input, button {
+                width: auto;
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Psychologist Finder</h1>
+    </header>
+    <main>
+        <h1>Filter Psychologists</h1>
+
+        <form method="get">
+            <div>
+                <label for="specialization">Specialization:</label>
+                <input type="text" name="specialization" id="specialization" placeholder="e.g., Therapist" value="{{ request.GET.specialization }}">
+            </div>
+
+            <div>
+                <label for="min_experience">Min Experience (Years):</label>
+                <input type="number" name="min_experience" id="min_experience" placeholder="e.g., 5" value="{{ request.GET.min_experience }}">
+            </div>
+
+            <div>
+                <label for="location">Location:</label>
+                <input type="text" name="location" id="location" placeholder="e.g., New York" value="{{ request.GET.location }}">
+            </div>
+
+            <div style="flex: 1 100%;">
+                <button type="submit">Filter</button>
+            </div>
+        </form>
+
+        <h2>Results:</h2>
+        {% if psychologists %}
+            <ul>
+                {% for psychologist in psychologists %}
+                    <li>
+                        <strong>{{ psychologist.name }}</strong><br>
+                        Specialization: {{ psychologist.specialization }}<br>
+                        Experience: {{ psychologist.experience_years }} years<br>
+                        Location: {{ psychologist.location }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No psychologists found. Please refine your search criteria.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
